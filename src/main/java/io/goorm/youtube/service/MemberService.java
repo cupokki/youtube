@@ -21,6 +21,7 @@ public interface MemberService {
 
     public int update(Member member);
 
-    public int updatePublishYn(Member member);
+    public int resetPw(Member member);
 
+    public int updateUseYn(Member member);
 }

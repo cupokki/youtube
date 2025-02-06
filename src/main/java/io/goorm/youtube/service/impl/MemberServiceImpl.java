@@ -57,7 +57,13 @@ public class MemberServiceImpl implements MemberService {
         return memberMapper.update(member);
     }
 
-    public int updatePublishYn(Member member) {
+    @Override
+    public int resetPw(Member member) {
+        return memberMapper.resetPw(member);
+    }
+
+    @Override
+    public int updateUseYn(Member member) {
 
         return memberMapper.updateUseYn(member);
     }

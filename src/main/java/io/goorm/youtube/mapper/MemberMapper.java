@@ -29,4 +29,5 @@ public interface MemberMapper {
 
     int delete(@Param("memberSeq") Long memberSeq);
 
+    int resetPw(Member member);
 }

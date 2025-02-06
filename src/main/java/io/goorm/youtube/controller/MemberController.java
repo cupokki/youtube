@@ -62,7 +62,7 @@ public class MemberController {
 
     //로그인폼
     @GetMapping("/login")
-    public String lognForm() {
+    public String loginForm() {
 
         return "login";
     }
@@ -114,7 +114,6 @@ public class MemberController {
     @GetMapping("/members")
     public String profileForm(HttpSession session, Model model) {
 
-
         Member member = (Member) session.getAttribute("member");
 
         if (member == null) {
@@ -142,4 +141,22 @@ public class MemberController {
         //return "redirect:/mgr/videos/" + video.getVideoSeq();
     }
 
+    //비밀번호 수정 폼
+    @GetMapping("/resetpw")
+    public String resetPwForm(Model model) {
+
+        model.addAttribute("title", "사용자-비밀번호 재설정");
+
+        return "resetpw";
+    }
+
+    @PostMapping("/resetpw")
+    public String resetPw(@ModelAttribute Member member, Model model) {
+
+        memberService.resetPw(member);
+
+        model.addAttribute("title", "사용자-비밀번호 재설정");
+
+        return "restpw";
+    }
 }
