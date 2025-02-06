@@ -41,6 +41,7 @@ public class AdminController {
 
         Admin admins = adminService.login(admin);
 
+
         if ( admin != null && validateLogin(admins.getAdminPw(), admin.getAdminPw()) ) {
 
             log.debug("성공");

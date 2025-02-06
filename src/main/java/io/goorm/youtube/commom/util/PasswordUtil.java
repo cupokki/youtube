@@ -11,8 +11,8 @@ public class PasswordUtil {
     }
 
     public static boolean matches(String rawPassword, String encryptedPassword) {
-        log.debug("encryptPassword(rawPassword) : " + encryptPassword(rawPassword));
-        log.debug("encryptedPassword : " + encryptedPassword);
+        log.info("encryptPassword(rawPassword) : " + encryptPassword(rawPassword));
+        log.info("encryptedPassword : " + encryptedPassword);
 
         return BCrypt.checkpw(rawPassword, encryptedPassword);
 
