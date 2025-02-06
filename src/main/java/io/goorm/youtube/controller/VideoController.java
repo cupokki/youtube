@@ -3,6 +3,7 @@ package io.goorm.youtube.controller;
 import io.goorm.youtube.commom.util.FileUploadUtil;
 import io.goorm.youtube.service.VideoService;
 import io.goorm.youtube.vo.DefaultVO;
+import io.goorm.youtube.vo.domain.Admin;
 import io.goorm.youtube.vo.domain.Video;
 
 import jakarta.servlet.http.HttpSession;
@@ -38,6 +39,9 @@ public class VideoController {
 
         model.addAttribute("posts", videoService.findAll(defaultVO));
         model.addAttribute("title", "비디오-리스트" );
+        model.addAttribute("page", defaultVO.getPage() );
+        model.addAttribute("totalPages", defaultVO.getTotalPages() );
+
 
         return "video/list";
     }
@@ -100,7 +104,7 @@ public class VideoController {
             model.addAttribute("msg", "비디오등록에 실패하였습니다.");
             return "redirect:/videos/create"; // 예외 발생시 등록 폼으로
         }
-        
+
         return "redirect:/";
     }
 
@@ -117,7 +121,27 @@ public class VideoController {
 
     //수정
     @PostMapping("/videos/{videoSeq}")
-    public String  update(@ModelAttribute Video video, Model model, RedirectAttributes redirectAttributes) {
+    public String  update(@ModelAttribute Video video, Model model,
+                          @RequestParam("videoFile") MultipartFile videoFile,
+                          @RequestParam("videoThumnailFile") MultipartFile videoThumnail,
+                          RedirectAttributes redirectAttributes) {
+
+        log.debug("update");
+
+        try {
+            String videoPath = FileUploadUtil.uploadFile(videoFile, "vod");
+            String videoThumbnailPath = FileUploadUtil.uploadFile(videoFile, "thumbnail");
+
+            video.setVideo(videoPath);
+            video.setVideoThumnail(videoThumbnailPath);
+
+            videoService.update(video);
+            model.addAttribute("msg", "비디오가 성공적으로 등록 되었습니다.");
+
+        } catch (Exception e) {
+            model.addAttribute("msg", "비디오등록에 실패하였습니다.");
+            return "redirect:/videos/create"; // 예외 발생시 등록 폼으로
+        }
 
         redirectAttributes.addAttribute("videoSeq", video.getVideoSeq());
         redirectAttributes.addFlashAttribute("msg", "수정에 성공하였습니다.");
@@ -127,4 +151,24 @@ public class VideoController {
         //return "redirect:/mgr/videos/" + video.getVideoSeq();
     }
 
+    //사용여부 변경
+    @GetMapping("/videos/{videoSeq}/publishyn")
+    public String  updatePublishYN(@PathVariable("videoSeq") Long videoSeq, Model model, RedirectAttributes redirectAttributes) {
+
+        Video video = videoService.find(videoSeq);
+
+        if (video.getPublishYn() == 0) {
+            video.setPublishYn(1);
+        } else {
+            video.setPublishYn(0);
+        }
+
+        videoService.updatePublishYn(video);
+
+        redirectAttributes.addAttribute("videoSeq", video.getVideoSeq());
+        redirectAttributes.addFlashAttribute("msg", "사용여부 수정에 성공하였습니다.");
+
+        return "redirect:/videos";
+
+    }
 }
