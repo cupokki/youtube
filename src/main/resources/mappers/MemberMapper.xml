@@ -49,10 +49,9 @@
     <!-- UPDATE -->
     <update id="resetPw" parameterType="io.goorm.youtube.vo.domain.Member">
         UPDATE member
-        SET member_pw = #{member.memberPw}
-        WHERE member_seq = #{member.memberSeq}
+        SET member_pw = #{memberPw}
+        WHERE member_seq = #{memberSeq}
     </update>
-
 
     <!-- UPDATE -->
     <update id="updateUseYn" parameterType="io.goorm.youtube.vo.domain.Member">

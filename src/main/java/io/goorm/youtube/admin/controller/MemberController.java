@@ -55,7 +55,7 @@ public class MemberController {
     }
 
     //사용여부 변경
-    @GetMapping("/members/{adminSeq}/useyn")
+    @GetMapping("/members/{memberSeq}/useyn")
     public String  updateUseYN(@PathVariable("memberSeq") Long memberSeq, Model model, RedirectAttributes redirectAttributes) {
 
         Member member = memberService.find(memberSeq);

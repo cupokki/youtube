@@ -30,7 +30,7 @@
                 </td>
                 <td class="border px-4 py-2">
                     <a th:href="@{'/mgr/admins/' + ${post.adminSeq}}" class="text-blue-500 hover:underline" th:text="${post.useYn}"></a>
-                    <a th:href="@{'/mgr/admins/' + ${post.adminSeq} + '/useyn'}" class="bg-blue-500 text-white my-8 px-2 py-2">정지</a>
+                    <a th:href="@{'/mgr/admins/' + ${post.memberSeq} + '/useyn'}" class="bg-blue-500 text-white my-8 px-2 py-2">정지</a>
                 </td>
                 <td class="border px-4 py-2" th:text="${post.regName}"></td>
                 <td class="border px-4 py-2" th:text="${post.regDate}"></td>

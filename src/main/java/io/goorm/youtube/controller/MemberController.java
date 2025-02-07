@@ -153,10 +153,13 @@ public class MemberController {
     @PostMapping("/resetpw")
     public String resetPw(@ModelAttribute Member member, Model model) {
 
+        String pw = member.getMemberPw();
+        String encryptedPassword = PasswordUtil.encryptPassword(pw);
+        member.setMemberPw(encryptedPassword);
         memberService.resetPw(member);
 
-        model.addAttribute("title", "사용자-비밀번호 재설정");
+//        model.addAttribute("title", "사용자-비밀번호 재설정");
 
-        return "restpw";
+        return "redirect:/login";
     }
 }

@@ -11,7 +11,7 @@ import java.util.List;
 public interface VideoService {
 
 
-    public List<Video> findIndex();
+    public List<Video> findIndex(DefaultVO defaultVO);
 
     public List<Video> findAll(DefaultVO defaultVO);
 
